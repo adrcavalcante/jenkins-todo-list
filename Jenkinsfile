@@ -4,8 +4,11 @@ pipeline {
     stages {
         stage ('Build image') {
             steps {
+                // script {
+                //    dockerapp = docker.build("adrcavalcante/jenkins-todo-list:${env.BUILD_ID}", '-f Dockerfile .')
+                //}
                 script {
-                    dockerapp = docker.build("adrcavalcante/jenkins-todo-list:${env.BUILD_ID}", '-f Dockerfile .')
+                    dockerapp = docker.build("adrcavalcante/jenkins-todo-list:${env.BUILD_ID}", '--network=host -f Dockerfile .')
                 }
             }
 
