@@ -4,14 +4,20 @@ pipeline {
     stages {
         stage ('Build image') {
             steps {
-                sh 'echo "Executando docker build"'
+                script {
+                    dockerapp = docker.build("adrcavalcante/jenkins-todo-list:${env.BUILD_ID}", '-f Dockerfile .')
+                }
             }
 
         }
 
          stage ('Push Docker image') {
             steps {
-                sh 'echo "Executando push" '
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub')
+                    dockerapp.push('latest')
+                     dockerapp.push("${env.BUILD_ID}")
+                }
             }
 
         }
