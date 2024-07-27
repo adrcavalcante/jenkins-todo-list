@@ -5,13 +5,8 @@ COPY . /usr/src/app
 WORKDIR /usr/src/app
 COPY requirements.txt ./
 # Instalando os requerimentos com o PIP
-#RUN echo "nameserver 8.8.8.8" > /etc/resolv.conf && \
-#pip install --no-cache-dir -r requirements.txt
-RUN echo "nameserver 8.8.8.8" > temp-resolv.conf && \
-    mv /etc/resolv.conf /etc/resolv.conf.bak && \
-    mv temp-resolv.conf /etc/resolv.conf && \
-    pip install --no-cache-dir -r requirements.txt && \
-    mv /etc/resolv.conf.bak /etc/resolv.conf
+RUN pip install --no-cache-dir -r requirements.txt
+
 # Expondo a porta da APP
 EXPOSE 8000
 # Executando o comando para subir a aplicacao
